@@ -15,8 +15,6 @@ public class SampleController {
 	@RequestMapping("home")
 	public String loadHomePage(Model m) {
 		m.addAttribute("name", "CodeTutr");
-		
-		
 		Veiculo veiculo = new Veiculo();
 		veiculo.setFabricante("fab");
 		veiculo.setAno("1111");

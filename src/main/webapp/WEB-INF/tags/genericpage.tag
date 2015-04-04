@@ -1,14 +1,15 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
 <html>
 	<head>
-		<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-		<link rel="stylesheet" href="resources/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="resources/css/style.css">
-		<script src="resources/js/jquery-2.1.1.min.js"></script>
-		<script src="resources/js/bootstrap.min.js"></script>
-		<script src="resources/js/myscripts.js"></script>
+		<link rel="stylesheet" href=" <c:url value='/resources/css/bootstrap.min.css' />">
+		<link rel="stylesheet" href=" <c:url value='/resources/css/bootstrap-theme.min.css' />">
+		<link rel="stylesheet" href=" <c:url value='/resources/css/style.css' />">
+		<script src=" <c:url value='/resources/js/jquery-2.1.1.min.js' /> "></script>
+		<script src=" <c:url value='/resources/js/bootstrap.min.js' /> "></script>
+		<script src=" <c:url value='/resources/js/myscripts.js' /> "></script>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	</head>
   <body>
@@ -29,22 +30,11 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand" href="/loja_project/home.php">Loja axé melodico</a>
+		      <a class="navbar-brand" href="/loja_project/home.php">Veículos</a>
 		    </div>
 
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      <ul class="nav navbar-nav">
-			<li class="active"><a href="/loja_project/home.php">Home</a></li>
-			<li class="dropdown">
-			  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastro<span class="caret"></span></a>
-			  <ul class="dropdown-menu" role="menu">
-			  	<li><a href="/loja_project/grupo/list.php">Grupo</a></li>
-			    <li><a href="/loja_project/album/list.php">Albuns</a></li>
-			    <li><a href="/loja_project/faixa/list.php">Faixas</a></li>
-			  </ul>
-			</li>
-		      </ul>
 		      <ul class="nav navbar-nav navbar-right">
 			<li><a href="/loja_project/logout.php">Exit</a></li>
 		      </ul>
