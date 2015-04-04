@@ -22,7 +22,7 @@ public class SampleController {
 		veiculo.setAno("1111");
 		veiculo.setModelo("mod");
 		
-		veiculoService.save(veiculo);
+		//veiculoService.save(veiculo);
 		
 		
 		return "home";
