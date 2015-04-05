@@ -141,7 +141,6 @@ public class VeiculoController {
 			return new ModelAndView("redirect:/", "message", message);
 		}
 		m.addAttribute("veiculo", veiculo);
-		m.addAttribute("imgSrc", servletContext.getRealPath("/") + "images/" + veiculo.getFoto());
 		return "veiculo/edit";
 	}
 	
