@@ -19,7 +19,7 @@
 			      </c:when>
 			</c:choose>
              <form autocomplete="off" id="login-form"  method="post" action="${contextPath}/veiculo/update" role="form" enctype="multipart/form-data">
-             		<input type="hidden" value="${veiculo.getId()}">
+             		<input type="hidden" name="id" value="${veiculo.getId()}">
                   <div class="form-group">
                       <label for="nome">Fabricante</label>
                       <input placeholder="Fabricante"  class="form-control" id="fabrincante" name="fabricante" value="${veiculo.getFabricante()}">
@@ -33,11 +33,18 @@
                       <input type="number" placeholder="ano"  class="form-control" id="ano" name="ano" value="${veiculo.getAno()}">
                   </div>
                    <div class="form-group">
-                      <label for="ano">Foto</label>
-                        <input id="arquivos" type="file" class="form-control" id="foto" name="foto" value="http://www.mktesportivo.com/novo/wp-content/uploads/2013/12/img_logo_blue.jpg">
+                      <label for="ano">Nova Foto</label>
+                        <input id="arquivos" type="file" class="form-control" id="foto" name="foto">
                   </div>
+                   <c:choose>
+					      <c:when test="${veiculo.getFoto() != null && veiculo.getFoto().length() > 0}">
+						      <div class="form-group">
+			                      <label for="ano">Foto Atual</label>
+			                        <img src="${pageContext.request.contextPath}/resources/images/${veiculo.getFoto()}"/>
+			                  </div>
+					      </c:when>
+					</c:choose>
                   <input type="submit" value="Alterar" class="btn btn-custom btn-lg btn-block" id="btn-login">
-                  <img src="${pageContext.request.contextPath}/images/${veiculo.getFoto()}"/>
               </form>
           </div>
     </div>

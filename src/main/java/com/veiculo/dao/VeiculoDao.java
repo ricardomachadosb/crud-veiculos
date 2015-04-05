@@ -17,4 +17,6 @@ public interface VeiculoDao{
 	public Veiculo get(Integer id);
 	
 	public void delete(Veiculo id);
+	
+	public void merge(Veiculo veiculo);
 }

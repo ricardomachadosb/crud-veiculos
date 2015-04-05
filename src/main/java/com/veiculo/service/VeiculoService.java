@@ -1,8 +1,13 @@
 package com.veiculo.service;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.veiculo.dao.impl.VeiculoDaoImpl;
 import com.veiculo.entity.Veiculo;
@@ -16,6 +21,7 @@ import com.veiculo.exception.VeiculoException;
 public class VeiculoService {
 	
 	VeiculoDaoImpl veiculoImpl = new VeiculoDaoImpl();
+	FileService fileService = new FileService();
 	
 	/**
 	 * @param veiculo
@@ -59,5 +65,26 @@ public class VeiculoService {
 		}
 		
 		veiculoImpl.delete(veiculo);
+	}
+	
+	/**
+	 * @param veiculo
+	 * @param fabricante
+	 * @param ano
+	 * @param modelo
+	 * @param foto
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	public void updateVeiculo(Veiculo veiculo, String fabricante, String ano, String modelo, MultipartFile foto) throws IllegalStateException, IOException{
+		veiculo.setFabricante(fabricante);
+		veiculo.setAno(ano);
+		veiculo.setModelo(modelo);
+		
+		if(foto.getOriginalFilename().length() > 0){
+			veiculo.setFoto(foto.getOriginalFilename());
+			fileService.saveImage(foto);
+		}
+		veiculoImpl.merge(veiculo);
 	}
 }

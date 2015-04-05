@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.veiculo.entity.Veiculo;
 import com.veiculo.exception.VeiculoException;
+import com.veiculo.service.FileService;
 import com.veiculo.service.VeiculoService;
 
 /**
@@ -31,6 +32,7 @@ import com.veiculo.service.VeiculoService;
 public class VeiculoController {
 	
 	VeiculoService veiculoService = new VeiculoService();
+	FileService fileService = new FileService();
 	
 	@Autowired
 	ServletContext servletContext;
@@ -87,27 +89,37 @@ public class VeiculoController {
 	 * @return
 	 */
 	@RequestMapping("veiculo/save")
-	public ModelAndView save(Model m, @RequestParam(required = false) String fabricante, 
+	public Object save(Model m, @RequestParam(required = false) String fabricante, 
 			@RequestParam(required = false) String modelo,
 			@RequestParam(required = false) String ano,
-			@RequestParam(required = false) MultipartFile foto,
-			HttpServletRequest req){
-		String message = "Veiculo salvo com sucesso";
+			@RequestParam(required = false) MultipartFile foto){
+		
+		String message = "";
 		Veiculo veiculo = new Veiculo(ano, fabricante, modelo, foto.getOriginalFilename());
-		veiculoService.save(veiculo);
-		//String filePath = servletContext.getRealPath("/WEB-INF/") + "images/" + foto.getOriginalFilename();
-		String filePath = req.getRealPath("/src/main/resources") + "/images/" + foto.getOriginalFilename();
 		
 		try{
-			File f = new File(filePath);
-			if(!f.exists()){
-				f.mkdirs();
-			}
-			foto.transferTo(new File(filePath));
+			veiculoService.save(veiculo);
 		}catch(Exception e){
-			System.out.println("Problemas ao salvar o arquivo");
+			message = "Problemas ao salvar novo veículo, verifique os valores informados e tente novamente";
 		}
 		
+		//String filePath = servletContext.getRealPath("/resources/") + "/images/" + foto.getOriginalFilename();
+		
+		if(foto.getOriginalFilename().length() > 0){
+			try{
+				fileService.saveImage(foto);
+			}catch(Exception e){
+				message = "Problemas ao salvar o arquivo";
+			}
+		}
+		
+		if(message.length() > 0){
+			m.addAttribute("veiculo", veiculo);
+			m.addAttribute("message", message);
+			return "veiculo/create";
+		}
+		
+		message = "Veiculo salvo com sucesso";
 		return new ModelAndView("redirect:/", "message", message);
 	}
 	
@@ -131,5 +143,41 @@ public class VeiculoController {
 		m.addAttribute("veiculo", veiculo);
 		m.addAttribute("imgSrc", servletContext.getRealPath("/") + "images/" + veiculo.getFoto());
 		return "veiculo/edit";
+	}
+	
+	/**
+	 * @param m
+	 * @param fabricante
+	 * @param modelo
+	 * @param ano
+	 * @param foto
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("veiculo/update")
+	public Object update(Model m, @RequestParam(required = false) String fabricante, 
+			@RequestParam(required = false) String modelo,
+			@RequestParam(required = false) String ano,
+			@RequestParam(required = false) MultipartFile foto,
+			@RequestParam(required = false) Integer id){
+		
+		String message = "";
+		Veiculo veiculo = null;
+		
+		try{
+			veiculo = veiculoService.get(id);
+			veiculoService.updateVeiculo(veiculo, fabricante, ano, modelo, foto);
+		}catch(Exception e){
+			e.printStackTrace();
+			message = "Problemas ao alterar veiculo, verifique os valores informado e tente novamente";
+		}
+		
+		if(message.length() > 0){
+			m.addAttribute("veiculo", veiculo);
+			m.addAttribute("message", message);
+			return "veiculo/edit";
+		}
+		message = "Veiculo alterado com sucesso";
+		return new ModelAndView("redirect:/", "message", message);
 	}
 }

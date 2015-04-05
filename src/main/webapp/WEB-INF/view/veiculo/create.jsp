@@ -21,15 +21,15 @@
              <form autocomplete="off" id="login-form"  method="post" action="${contextPath}/veiculo/save" role="form" enctype="multipart/form-data">
                   <div class="form-group">
                       <label for="nome">Fabricante</label>
-                      <input placeholder="Fabricante"  class="form-control" id="fabrincante" name="fabricante">
+                      <input placeholder="Fabricante"  class="form-control" id="fabrincante" name="fabricante" value="${veiculo.getFabricante()	}">
                   </div>
                   <div class="form-group">
                       <label for="modelo">Modelo</label>
-                      <input placeholder="Modelo"  class="form-control" id="modelo" name="modelo">
+                      <input placeholder="Modelo"  class="form-control" id="modelo" name="modelo" value="${veiculo.getModelo()}">
                   </div>
                   <div class="form-group">
                       <label for="ano">Ano</label>
-                      <input type="number" placeholder="ano"  class="form-control" id="ano" name="ano">
+                      <input type="number" placeholder="ano"  class="form-control" id="ano" name="ano" value="${veiculo.getAno()}">
                   </div>
                    <div class="form-group">
                       <label for="ano">Foto</label>

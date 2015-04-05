@@ -54,4 +54,12 @@ public class VeiculoDaoImpl implements VeiculoDao {
 		session.getTransaction().commit();
 	}
 
+	@Override
+	public void merge(Veiculo veiculo) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.merge(veiculo);
+		session.getTransaction().commit();
+	}
+
 }
