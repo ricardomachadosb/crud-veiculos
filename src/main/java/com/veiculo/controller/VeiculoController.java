@@ -1,16 +1,22 @@
 package com.veiculo.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.veiculo.entity.Veiculo;
@@ -25,6 +31,9 @@ import com.veiculo.service.VeiculoService;
 public class VeiculoController {
 	
 	VeiculoService veiculoService = new VeiculoService();
+	
+	@Autowired
+	ServletContext servletContext;
 	
 	/**
 	 * @param m
@@ -63,10 +72,64 @@ public class VeiculoController {
 		return new ModelAndView("redirect:/", "message", message);
 	}
 	
+	/**
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("veiculo/create")
 	public String create(Model m){
 		Veiculo veiculo = new Veiculo();
 		m.addAttribute("veiculo", veiculo);
 		return "veiculo/create";
+	}
+	
+	/**
+	 * @return
+	 */
+	@RequestMapping("veiculo/save")
+	public ModelAndView save(Model m, @RequestParam(required = false) String fabricante, 
+			@RequestParam(required = false) String modelo,
+			@RequestParam(required = false) String ano,
+			@RequestParam(required = false) MultipartFile foto,
+			HttpServletRequest req){
+		String message = "Veiculo salvo com sucesso";
+		Veiculo veiculo = new Veiculo(ano, fabricante, modelo, foto.getOriginalFilename());
+		veiculoService.save(veiculo);
+		//String filePath = servletContext.getRealPath("/WEB-INF/") + "images/" + foto.getOriginalFilename();
+		String filePath = req.getRealPath("/src/main/resources") + "/images/" + foto.getOriginalFilename();
+		
+		try{
+			File f = new File(filePath);
+			if(!f.exists()){
+				f.mkdirs();
+			}
+			foto.transferTo(new File(filePath));
+		}catch(Exception e){
+			System.out.println("Problemas ao salvar o arquivo");
+		}
+		
+		return new ModelAndView("redirect:/", "message", message);
+	}
+	
+	/**
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "veiculo/edit/{id}", method = RequestMethod.GET)
+	public Object edit( @PathVariable Integer id, Model m){
+		Veiculo veiculo = null;
+		String message = "";
+		try {
+			veiculo = veiculoService.get(id);
+		}catch(VeiculoException e){
+			message = e.getMessage();
+		}
+		
+		if(message.length() > 0){
+			return new ModelAndView("redirect:/", "message", message);
+		}
+		m.addAttribute("veiculo", veiculo);
+		m.addAttribute("imgSrc", servletContext.getRealPath("/") + "images/" + veiculo.getFoto());
+		return "veiculo/edit";
 	}
 }

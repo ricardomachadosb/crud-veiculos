@@ -7,9 +7,12 @@
 		<link rel="stylesheet" href=" <c:url value='/resources/css/bootstrap.min.css' />">
 		<link rel="stylesheet" href=" <c:url value='/resources/css/bootstrap-theme.min.css' />">
 		<link rel="stylesheet" href=" <c:url value='/resources/css/style.css' />">
+		<link rel="stylesheet" href=" <c:url value='/resources/css/fileinput.min.css' />">
 		<script src=" <c:url value='/resources/js/jquery-2.1.1.min.js' /> "></script>
 		<script src=" <c:url value='/resources/js/bootstrap.min.js' /> "></script>
 		<script src=" <c:url value='/resources/js/myscripts.js' /> "></script>
+		<script src=" <c:url value='/resources/js/fileinput.min.js' /> "></script>
+		
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	</head>
   <body>
@@ -50,4 +53,5 @@
       <jsp:invoke fragment="footer"/>
     </div>
   </body>
+  
 </html>

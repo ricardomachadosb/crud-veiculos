@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.sun.istack.internal.NotNull;
 
 /**
  * @author Ricardo
@@ -15,23 +14,39 @@ import com.sun.istack.internal.NotNull;
 @Table(name="veiculo")
 public class Veiculo {
 	
+	/**
+	 * 
+	 */
+	public Veiculo(){}
+	
+	/**
+	 * @param ano
+	 * @param fabricante
+	 * @param modelo
+	 * @param foto
+	 */
+	public Veiculo(String ano, String fabricante, String modelo, String foto){
+		this.setAno(ano);
+		this.setFabricante(fabricante);
+		this.setModelo(modelo);
+		this.setFoto(foto);
+	}
+	
 	@Id
 	@Column(name="id")
 	private int id;
 	
-	@NotNull
 	@Column(name="fabricante")
 	private String fabricante;
 	
 	@Column(name="modelo")
 	private String modelo;
 	
-	@NotNull
 	@Column(name="ano")
 	private String ano;
 	
 	@Column(name="foto")
-	private byte[] foto;
+	private String foto;
 
 	/**
 	 * @return
@@ -85,14 +100,14 @@ public class Veiculo {
 	/**
 	 * @return
 	 */
-	public byte[] getFoto() {
+	public String getFoto() {
 		return foto;
 	}
 
 	/**
 	 * @param foto
 	 */
-	public void setFoto(byte[] foto) {
+	public void setFoto(String foto) {
 		this.foto = foto;
 	}
 	

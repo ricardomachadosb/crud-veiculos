@@ -15,3 +15,8 @@ function showPassword() {
     }
     
 }
+
+// with plugin options
+window.onload = function(){
+	$("#arquivos").fileinput({'showUpload':false, 'previewFileType':'any'});
+}
