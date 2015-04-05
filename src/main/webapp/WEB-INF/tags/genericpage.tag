@@ -1,5 +1,6 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
 <html>
@@ -33,13 +34,13 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand" href="/loja_project/home.php">Veículos</a>
+		      <a class="navbar-brand" href="${contextPath}/">Veículos</a>
 		    </div>
 
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      <ul class="nav navbar-nav navbar-right">
-			<li><a href="/loja_project/logout.php">Exit</a></li>
+			<li><a href="${contextPath}/logout">Exit</a></li>
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-fluid -->
