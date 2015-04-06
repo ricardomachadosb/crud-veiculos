@@ -95,7 +95,7 @@ public class VeiculoController {
 			@RequestParam(required = false) MultipartFile foto){
 		
 		String message = "";
-		Veiculo veiculo = new Veiculo(ano, fabricante, modelo, foto.getOriginalFilename());
+		Veiculo veiculo = new Veiculo(ano, fabricante, modelo, (foto != null) ? foto.getOriginalFilename() : null);
 		
 		try{
 			veiculoService.save(veiculo);
@@ -105,7 +105,7 @@ public class VeiculoController {
 		
 		//String filePath = servletContext.getRealPath("/resources/") + "/images/" + foto.getOriginalFilename();
 		
-		if(foto.getOriginalFilename().length() > 0){
+		if(foto != null && foto.getOriginalFilename().length() > 0){
 			try{
 				fileService.saveImage(foto);
 			}catch(Exception e){
