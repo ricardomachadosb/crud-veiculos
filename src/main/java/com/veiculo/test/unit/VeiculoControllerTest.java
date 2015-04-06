@@ -1,16 +1,13 @@
 package com.veiculo.test.unit;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Resource;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,20 +19,16 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.veiculo.config.WebConfig;
 import com.veiculo.controller.VeiculoController;
+import com.veiculo.dao.impl.VeiculoDaoImpl;
 import com.veiculo.entity.Veiculo;
 import com.veiculo.service.VeiculoService;
 
@@ -54,6 +47,9 @@ public class VeiculoControllerTest {
 	
 	@Mock
 	private VeiculoService veiculoService;
+	
+	@Mock
+	private VeiculoDaoImpl veiculoDaoImpl;
 	 
 	/**
 	 * 
@@ -163,8 +159,10 @@ public class VeiculoControllerTest {
 	 */
 	@Test
 	public void updateTest() throws Exception{
-		Veiculo veiculo1 = new Veiculo();
-		Mockito.when(veiculoService.get(1)).thenReturn(veiculo1);
+		Veiculo veiculo = new Veiculo();
+		Mockito.when(veiculoService.get(1)).thenReturn(veiculo);
+		
+		Mockito.doNothing().when(veiculoDaoImpl).merge(veiculo);
 		
 		mockMvc.perform(fileUpload("/veiculo/update").param("modelo", "m")
 				.param("ano", "1111")
