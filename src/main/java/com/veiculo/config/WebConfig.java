@@ -10,11 +10,18 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+/**
+ * @author ricardo
+ *
+ */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages="com.veiculo.controller")
+@ComponentScan(basePackages="com.veiculo")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public InternalResourceViewResolver viewResolver() {
 		InternalResourceViewResolver resolver = 
@@ -24,6 +31,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 	
+	/**
+	 * @return
+	 */
 	@Bean
 	public MultipartResolver multipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
@@ -31,6 +41,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return multipartResolver;
 	}
 	
+    /* (non-Javadoc)
+     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry)
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");

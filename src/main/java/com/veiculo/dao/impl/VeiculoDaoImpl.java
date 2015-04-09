@@ -18,6 +18,9 @@ import com.veiculo.utils.HibernateUtil;
 @Transactional
 public class VeiculoDaoImpl implements VeiculoDao {
 
+	/* (non-Javadoc)
+	 * @see com.veiculo.dao.VeiculoDao#save(com.veiculo.entity.Veiculo)
+	 */
 	@Override
 	public void save(Veiculo veiculo) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -27,6 +30,9 @@ public class VeiculoDaoImpl implements VeiculoDao {
 		session.close();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.veiculo.dao.VeiculoDao#list()
+	 */
 	@Override
 	public List<Veiculo> list() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -37,6 +43,9 @@ public class VeiculoDaoImpl implements VeiculoDao {
 		return veiculos;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.veiculo.dao.VeiculoDao#get(java.lang.Integer)
+	 */
 	@Override
 	public Veiculo get(Integer id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -46,6 +55,9 @@ public class VeiculoDaoImpl implements VeiculoDao {
 		return veiculo;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.veiculo.dao.VeiculoDao#delete(com.veiculo.entity.Veiculo)
+	 */
 	@Override
 	public void delete(Veiculo veiculo) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -54,6 +66,9 @@ public class VeiculoDaoImpl implements VeiculoDao {
 		session.getTransaction().commit();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.veiculo.dao.VeiculoDao#merge(com.veiculo.entity.Veiculo)
+	 */
 	@Override
 	public void merge(Veiculo veiculo) {
 		Session session = HibernateUtil.getSessionFactory().openSession();

@@ -7,11 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.veiculo.entity.Veiculo;
 import com.veiculo.service.VeiculoService;
 
+/**
+ * @author ricardo
+ *
+ */
 @Controller
 public class SampleController {
 	
 	VeiculoService veiculoService = new VeiculoService();
 	
+	/**
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("home")
 	public String loadHomePage(Model m) {
 		m.addAttribute("name", "CodeTutr");

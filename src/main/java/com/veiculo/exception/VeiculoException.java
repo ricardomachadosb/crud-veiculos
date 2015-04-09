@@ -7,6 +7,11 @@ package com.veiculo.exception;
 public class VeiculoException extends Exception{
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param message
 	 */
 	public VeiculoException(String message) {

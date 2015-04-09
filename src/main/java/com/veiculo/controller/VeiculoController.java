@@ -1,13 +1,8 @@
 package com.veiculo.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,8 +26,11 @@ import com.veiculo.service.VeiculoService;
 @Controller
 public class VeiculoController {
 	
-	VeiculoService veiculoService = new VeiculoService();
-	FileService fileService = new FileService();
+	@Autowired
+	VeiculoService veiculoService;
+	
+	@Autowired
+	FileService fileService;
 	
 	@Autowired
 	ServletContext servletContext;
@@ -102,11 +100,9 @@ public class VeiculoController {
 		}catch(Exception e){
 			message = "Problemas ao salvar novo veículo, verifique os valores informados e tente novamente";
 		}
-		
-		String filePath = servletContext.getRealPath("/resources/") + "/images/" + foto.getOriginalFilename();
-		
 		if(foto != null && foto.getOriginalFilename().length() > 0){
 			try{
+				String filePath = servletContext.getRealPath("/resources/") + "/images/" + veiculo.getId() + foto.getOriginalFilename();
 				fileService.saveImage(foto, filePath);
 			}catch(Exception e){
 				e.printStackTrace();
@@ -141,6 +137,7 @@ public class VeiculoController {
 		if(message.length() > 0){
 			return new ModelAndView("redirect:/", "message", message);
 		}
+		
 		m.addAttribute("veiculo", veiculo);
 		return "veiculo/edit";
 	}
@@ -167,14 +164,14 @@ public class VeiculoController {
 		try{
 			veiculo = veiculoService.get(id);
 			veiculoService.updateVeiculo(veiculo, fabricante, ano, modelo, foto);
-			if(foto.getOriginalFilename().length() > 0){
+			if(foto != null && foto.getOriginalFilename().length() > 0){
 				veiculo.setFoto(foto.getOriginalFilename());
-				String filePath = servletContext.getRealPath("/resources/") + "/images/" + foto.getOriginalFilename();
+				String filePath = servletContext.getRealPath("/resources/") + "/images/" + veiculo.getId() + foto.getOriginalFilename();
 				fileService.saveImage(foto, filePath);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "Problemas ao alterar veiculo, verifique os valores informado e tente novamente";
+			message = "Problemas ao alterar veículo, verifique os valores informado e tente novamente";
 		}
 		
 		if(message.length() > 0){
@@ -182,6 +179,7 @@ public class VeiculoController {
 			m.addAttribute("message", message);
 			return "veiculo/edit";
 		}
+		
 		message = "Veiculo alterado com sucesso";
 		return new ModelAndView("redirect:/", "message", message);
 	}

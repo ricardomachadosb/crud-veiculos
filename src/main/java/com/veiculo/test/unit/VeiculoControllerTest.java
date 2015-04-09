@@ -17,14 +17,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.veiculo.config.WebConfig;
 import com.veiculo.controller.VeiculoController;
@@ -59,16 +55,6 @@ public class VeiculoControllerTest {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(veiculoController).build();
 		MockitoAnnotations.initMocks(this);
 	}
-	
-   @Configuration
-    public static class TestConfiguration {
-        @Bean
-        public MultipartResolver multipartResolver() {
-    		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-    		multipartResolver.setMaxUploadSize(5 * 1024 * 1024);
-            return Mockito.spy(multipartResolver);
-        }
-    }
 	
 	/**
 	 * @throws Exception
@@ -171,7 +157,6 @@ public class VeiculoControllerTest {
 		.andExpect(status().is3xxRedirection())
 		.andExpect(view().name("redirect:/"))
 		.andExpect(model().attribute("message", "Veiculo alterado com sucesso"));
-		
 	}
 	
 }
