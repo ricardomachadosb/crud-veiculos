@@ -80,6 +80,9 @@ public class VeiculoService {
 		veiculo.setFabricante(fabricante);
 		veiculo.setAno(ano);
 		veiculo.setModelo(modelo);
+		if(foto != null && foto.getOriginalFilename().length() > 0){
+			veiculo.setFoto(foto.getOriginalFilename());
+		}
 		
 		veiculoImpl.merge(veiculo);
 	}
