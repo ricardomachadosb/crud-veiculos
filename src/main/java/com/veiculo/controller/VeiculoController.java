@@ -103,12 +103,13 @@ public class VeiculoController {
 			message = "Problemas ao salvar novo veículo, verifique os valores informados e tente novamente";
 		}
 		
-		//String filePath = servletContext.getRealPath("/resources/") + "/images/" + foto.getOriginalFilename();
+		String filePath = servletContext.getRealPath("/resources/") + "/images/" + foto.getOriginalFilename();
 		
 		if(foto != null && foto.getOriginalFilename().length() > 0){
 			try{
-				fileService.saveImage(foto);
+				fileService.saveImage(foto, filePath);
 			}catch(Exception e){
+				e.printStackTrace();
 				message = "Problemas ao salvar o arquivo";
 			}
 		}
@@ -166,6 +167,11 @@ public class VeiculoController {
 		try{
 			veiculo = veiculoService.get(id);
 			veiculoService.updateVeiculo(veiculo, fabricante, ano, modelo, foto);
+			if(foto.getOriginalFilename().length() > 0){
+				veiculo.setFoto(foto.getOriginalFilename());
+				String filePath = servletContext.getRealPath("/resources/") + "/images/" + foto.getOriginalFilename();
+				fileService.saveImage(foto, filePath);
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "Problemas ao alterar veiculo, verifique os valores informado e tente novamente";

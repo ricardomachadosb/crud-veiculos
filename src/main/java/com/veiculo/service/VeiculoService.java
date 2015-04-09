@@ -81,10 +81,6 @@ public class VeiculoService {
 		veiculo.setAno(ano);
 		veiculo.setModelo(modelo);
 		
-		if(foto.getOriginalFilename().length() > 0){
-			veiculo.setFoto(foto.getOriginalFilename());
-			fileService.saveImage(foto);
-		}
 		veiculoImpl.merge(veiculo);
 	}
 }
