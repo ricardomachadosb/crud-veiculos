@@ -134,7 +134,7 @@ public class VeiculoController {
 			return "veiculo/create";
 		}
 		
-		HashMapUtils model = new HashMapUtils(message, RequestStatus.SUCCESS);
+		HashMapUtils model = new HashMapUtils("Veículo criado com sucesso", RequestStatus.SUCCESS);
 		
 		return new ModelAndView("redirect:/", model);
 	}

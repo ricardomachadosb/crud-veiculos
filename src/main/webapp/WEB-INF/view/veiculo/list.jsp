@@ -38,7 +38,7 @@
 		            <span aria-hidden='true' class='glyphicon glyphicon-edit'></span>
 		            </button></a>
 		
-		            <a href='${contextPath}/veiculo/delete/${veiculo.getId()}'> <button class='btn btn-default' type='button'>
+		            <a onclick="return confirm('Tem certeza?');" href='${contextPath}/veiculo/delete/${veiculo.getId()}'> <button class='btn btn-default' type='button'>
 		            <span aria-hidden='true' class='glyphicon glyphicon-trash'></span>
 		            </button></a>
 		        </td>

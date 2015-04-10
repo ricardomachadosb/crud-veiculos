@@ -40,7 +40,7 @@
 					      <c:when test="${veiculo.getFoto() != null && veiculo.getFoto().length() > 0}">
 						      <div class="form-group">
 			                      <label for="ano">Foto Atual</label>
-			                        <img src="${pageContext.request.contextPath}/resources/images/${veiculo.getFoto()}"/>
+			                        <img width="400" height="300" src="${pageContext.request.contextPath}/resources/images/${veiculo.getFoto()}"/>
 			                  </div>
 					      </c:when>
 					</c:choose>
