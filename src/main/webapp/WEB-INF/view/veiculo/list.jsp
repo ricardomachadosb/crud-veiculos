@@ -13,7 +13,7 @@
 	    </ul>
 	    <c:choose>
 		      <c:when test="${message.length() > 0}">
-		      	<div class='alert alert-success' role='alert'>${message}</div>
+		      	<div class='alert alert-${requestStatus.getClasse()}' role='alert'>${message}</div>
 		      </c:when>
 		</c:choose>
 	    <table class="table table-bordered">

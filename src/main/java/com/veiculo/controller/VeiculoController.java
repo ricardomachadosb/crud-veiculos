@@ -15,9 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.veiculo.entity.Veiculo;
+import com.veiculo.enums.RequestStatus;
 import com.veiculo.exception.VeiculoException;
 import com.veiculo.service.FileService;
 import com.veiculo.service.VeiculoService;
+import com.veiculo.utils.HashMapUtils;
 
 /**
  * @author ricardo
@@ -41,12 +43,20 @@ public class VeiculoController {
 	 * @return
 	 */
 	@RequestMapping(value={"veiculo/list", "/"})
-	public String list(Model m, @RequestParam(required = false) String message){
+	public String list(Model m, @RequestParam(required = false) String message,
+			@RequestParam(required = false) RequestStatus requestStatus){
 		List<Veiculo> veiculos = veiculoService.list();
 		m.addAttribute("veiculos", veiculos);
+		
 		if(message == null){
 			message = "";
 		}
+		
+		if(requestStatus == null){
+			requestStatus = RequestStatus.SUCCESS;
+		}
+		
+		m.addAttribute("requestStatus", requestStatus);
 		m.addAttribute("message", message);
 		return "veiculo/list";
 	}
@@ -59,17 +69,24 @@ public class VeiculoController {
 	public ModelAndView delete( @PathVariable Integer id){
 		Veiculo veiculo = null;
 		String message = "";
+		RequestStatus requestStatus = null;
+		
 		try {
 			veiculo = veiculoService.get(id);
 			veiculoService.delete(veiculo);
 		}catch(VeiculoException e){
 			message = e.getMessage();
+			requestStatus = RequestStatus.ERROR;
 		}
 		
 		if(message.length() < 1){
 			message = "Veiculo deletado com sucesso";
+			requestStatus = RequestStatus.SUCCESS;
 		}
-		return new ModelAndView("redirect:/", "message", message);
+		
+		HashMapUtils model = new HashMapUtils(message, requestStatus);
+		
+		return new ModelAndView("redirect:/", model);
 	}
 	
 	/**
@@ -95,10 +112,11 @@ public class VeiculoController {
 		String message = "";
 		Veiculo veiculo = new Veiculo(ano, fabricante, modelo, (foto != null) ? foto.getOriginalFilename() : null);
 		
+		
 		try{
 			veiculoService.save(veiculo);
 		}catch(Exception e){
-			message = "Problemas ao salvar novo veículo, verifique os valores informados e tente novamente";
+			message = "Problemas ao criar veículo, verifique os valores informados e tente novamente";
 		}
 		if(foto != null && foto.getOriginalFilename().length() > 0){
 			try{
@@ -112,11 +130,13 @@ public class VeiculoController {
 		if(message.length() > 0){
 			m.addAttribute("veiculo", veiculo);
 			m.addAttribute("message", message);
+			m.addAttribute("requestStatus", RequestStatus.ERROR);
 			return "veiculo/create";
 		}
 		
-		message = "Veiculo salvo com sucesso";
-		return new ModelAndView("redirect:/", "message", message);
+		HashMapUtils model = new HashMapUtils(message, RequestStatus.SUCCESS);
+		
+		return new ModelAndView("redirect:/", model);
 	}
 	
 	/**
@@ -136,10 +156,12 @@ public class VeiculoController {
 		}
 		
 		if(message.length() > 0){
-			return new ModelAndView("redirect:/", "message", message);
+			HashMapUtils model = new HashMapUtils(message, RequestStatus.ERROR);
+			return new ModelAndView("redirect:/", model);
 		}
 		
 		m.addAttribute("veiculo", veiculo);
+		m.addAttribute("requestStatus", RequestStatus.SUCCESS);
 		return "veiculo/edit";
 	}
 	
@@ -177,10 +199,13 @@ public class VeiculoController {
 		if(message.length() > 0){
 			m.addAttribute("veiculo", veiculo);
 			m.addAttribute("message", message);
+			m.addAttribute("requestStatus", RequestStatus.SUCCESS);
 			return "veiculo/edit";
 		}
 		
 		message = "Veículo alterado com sucesso";
-		return new ModelAndView("redirect:/", "message", message);
+		
+		HashMapUtils model = new HashMapUtils(message, RequestStatus.SUCCESS);
+		return new ModelAndView("redirect:/", model);
 	}
 }

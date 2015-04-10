@@ -137,7 +137,7 @@ public class VeiculoControllerTest {
 				.param("fabricante", "f"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(view().name("redirect:/"))
-		.andExpect(model().attribute("message", "Veiculo salvo com sucesso"));
+		.andExpect(model().attribute("message", "Veículo criado com sucesso"));
 	}
 	
 	/**
@@ -156,7 +156,7 @@ public class VeiculoControllerTest {
 				.param("id", "1"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(view().name("redirect:/"))
-		.andExpect(model().attribute("message", "Veiculo alterado com sucesso"));
+		.andExpect(model().attribute("message", "Veículo alterado com sucesso"));
 	}
 	
 }

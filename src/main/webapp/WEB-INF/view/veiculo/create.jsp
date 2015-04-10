@@ -15,7 +15,7 @@
           <div class="col-xs-6" style="margin-left: 25%;">
               <c:choose>
 			      <c:when test="${message.length() > 0}">
-			      	<div class='alert alert-success' role='alert'>${message}</div>
+			      	<div class='alert alert-${requestStatus.getClasse()}' role='alert'>${message}</div>
 			      </c:when>
 			</c:choose>
              <form autocomplete="off" id="login-form"  method="post" action="${contextPath}/veiculo/save" role="form" enctype="multipart/form-data">
