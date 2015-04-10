@@ -26,7 +26,6 @@
                         </div>
                         <input type="submit" value="Log in" class="btn btn-custom btn-lg btn-block" id="btn-login">
                     </form>
-                    <a data-target=".forget-modal" data-toggle="modal" class="forget" href="javascript:;">Esqueceu sua senha?</a>
                     <hr>
         	    </div>
     		</div> <!-- /.col-xs-12 -->

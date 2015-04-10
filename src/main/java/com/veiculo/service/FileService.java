@@ -15,21 +15,20 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service
 public class FileService {
-	
 
-	
 	/**
-	 * @throws IOException 
-	 * @throws IllegalStateException 
+	 * Grava no caminho de destino informado (destPath), 
+	 * o arquivo informado no parâmetro (fileToSave)
+	 * 
+	 * @throws java.io.IOException IOException 
+	 * @throws java.lang.IllegalStateException IllegalStateException 
 	 * 
 	 */
 	public void saveImage (MultipartFile fileToSave, String destPath) throws IllegalStateException, IOException{
-		//String destPath = servletContext.getRealPath("/resources/") + "/images/" + fileToSave.getOriginalFilename();
 		File f = new File(destPath);
 		if(!f.exists()){
 			f.mkdirs();
 		}
 		fileToSave.transferTo(new File(destPath));
-		
 	}
 }

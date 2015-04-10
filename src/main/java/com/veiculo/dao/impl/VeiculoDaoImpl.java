@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import com.veiculo.dao.VeiculoDao;
 import com.veiculo.entity.Veiculo;
@@ -16,8 +17,9 @@ import com.veiculo.utils.HibernateUtil;
  * 
  */
 @Transactional
+@Repository
 public class VeiculoDaoImpl implements VeiculoDao {
-
+	
 	/* (non-Javadoc)
 	 * @see com.veiculo.dao.VeiculoDao#save(com.veiculo.entity.Veiculo)
 	 */

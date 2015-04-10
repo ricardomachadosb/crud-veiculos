@@ -10,6 +10,10 @@ import com.veiculo.entity.Veiculo;
  *
  */
 public interface VeiculoDao{
+	
+	/**
+	 * @param veiculo
+	 */
 	public void save(Veiculo veiculo);
 	
 	/**

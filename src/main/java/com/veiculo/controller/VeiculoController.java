@@ -105,7 +105,6 @@ public class VeiculoController {
 				String filePath = servletContext.getRealPath("/resources/") + "/images/" + veiculo.getId() + foto.getOriginalFilename();
 				fileService.saveImage(foto, filePath);
 			}catch(Exception e){
-				e.printStackTrace();
 				message = "Problemas ao salvar o arquivo";
 			}
 		}
@@ -132,6 +131,8 @@ public class VeiculoController {
 			veiculo = veiculoService.get(id);
 		}catch(VeiculoException e){
 			message = e.getMessage();
+		}catch(Exception e){
+			message = "Problemas ao buscar veículo, atualize a pagina e tente novamente";
 		}
 		
 		if(message.length() > 0){
@@ -170,7 +171,6 @@ public class VeiculoController {
 				fileService.saveImage(foto, filePath);
 			}
 		}catch(Exception e){
-			e.printStackTrace();
 			message = "Problemas ao alterar veículo, verifique os valores informado e tente novamente";
 		}
 		
@@ -180,7 +180,7 @@ public class VeiculoController {
 			return "veiculo/edit";
 		}
 		
-		message = "Veiculo alterado com sucesso";
+		message = "Veículo alterado com sucesso";
 		return new ModelAndView("redirect:/", "message", message);
 	}
 }
