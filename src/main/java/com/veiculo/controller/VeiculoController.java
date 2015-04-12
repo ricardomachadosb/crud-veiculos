@@ -118,6 +118,7 @@ public class VeiculoController {
 		}catch(Exception e){
 			message = "Problemas ao criar veículo, verifique os valores informados e tente novamente";
 		}
+		
 		if(foto != null && foto.getOriginalFilename().length() > 0){
 			try{
 				String filePath = servletContext.getRealPath("/resources/") + "/images/" + veiculo.getId() + foto.getOriginalFilename();
