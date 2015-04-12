@@ -24,7 +24,7 @@
                             <span onclick="showPassword()" class="character-checkbox"></span>
                             <span class="label">Mostrar senha</span>
                         </div>
-                        <input type="submit" value="Log in" class="btn btn-custom btn-lg btn-block" id="btn-login">
+                        <input type="submit" value="Entrar" class="btn btn-custom btn-lg btn-block" id="btn-login">
                     </form>
                     <hr>
         	    </div>
